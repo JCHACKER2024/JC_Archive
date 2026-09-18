@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JCArchive</title>
+    <link rel="stylesheet" href="./CSS/main.css">
+    <!-- FontAwesome para o ícone do botão -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Biblioteca html2canvas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+
+    <header>
+        <div class="logo"><a href="index.html">JCArchive</a></div>
+        <nav class="nav-links">
+            <a href="index.html" class="active">Home</a>
+            <a href="jogos.html">Games</a>
+            <a href="filmes.html">Movies</a>
+            <a href="series.html">Series</a>
+            <a href="animes.html">Anime</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="hero">
+            <h1>JCArchive Hub</h1>
+            <p>Explore my private media archives or create your custom tier list below.</p>
+        </div>
+
+        <div class="hub-grid">
+            <a href="jogos.html" class="hub-card">
+                <h3>Games Archive</h3>
+                <p>Game ratings and classifications</p>
+            </a>
+            <a href="filmes.html" class="hub-card">
+                <h3>Movies Archive</h3>
+                <p>Movie ratings and classifications</p>
+            </a>
+            <a href="series.html" class="hub-card">
+                <h3>Series Archive</h3>
+                <p>Seasonal progress and ratings</p>
+            </a>
+            <a href="animes.html" class="hub-card">
+                <h3>Anime Archive</h3>
+                <p>Anime ratings and classifications</p>
+            </a>
+        </div>
+
+        <!-- Setup Panel -->
+        <div class="setup-panel" id="setup-panel">
+            <h2>Select Category to Build Custom Tier List</h2>
+            <p>Choose what you want to rank from the database or mix them all together:</p>
+            <div class="setup-options">
+                <button class="setup-btn" onclick="initBuilder('jogos')">Games</button>
+                <button class="setup-btn" onclick="initBuilder('filmes')">Movies</button>
+                <button class="setup-btn" onclick="initBuilder('series')">Series</button>
+                <button class="setup-btn" onclick="initBuilder('animes')">Animes</button>
+                <button class="setup-btn" onclick="initBuilder('mix')" style="border-color: var(--accent-glow);">Custom Mix (All)</button>
+            </div>
+        </div>
+
+        <!-- Custom Tier List Builder Section -->
+                <div class="builder-section" id="builder-section">
+                    <div class="builder-toolbar">
+                
+                <!-- 1. Título à esquerda (mais curto) -->
+                <div class="toolbar-group">
+                    <input type="text" id="tier-custom-title" placeholder="Escreve o título..." value="Games Custom Tier List">
+                </div>
+                
+                <!-- 2. Barra de Pesquisa e Botão Add ao lado -->
+                <div class="toolbar-group">
+                    <div class="input-wrapper">
+                        <input type="text" id="pool-search-input" placeholder="Search or add custom item..." oninput="filtrarOuAdicionarItem(event)" onkeydown="verificarEnterAdicao(event)">
+                    </div>
+                    <button onclick="adicionarItemManual()" class="setup-btn btn-add">
+                        <i class="fas fa-plus"></i> Add
+                    </button>
+                </div>
+                
+                <!-- 3. Botão de Guardar à direita -->
+                <div class="toolbar-group">
+                    <button onclick="guardarTierList()" class="setup-btn btn-save">
+                        <i class="fas fa-download"></i> Save as Image
+                    </button>
+                </div>
+            </div>
+            
+            <div id="game-pool" class="pool-container" ondragover="allowDrop(event)" ondrop="dropToPool(event)"></div>
+
+            <div id="capture-tier-container" class="tier-container">
+                <div class="tier-row" ondragover="allowDrop(event)" ondrop="dropToTier(event, 'S+')">
+                    <div class="tier-label tier-splus">
+                        <span>S+</span>
+                        <span style="font-size: 10px; font-weight: 600; text-transform: uppercase; opacity: 0.9;">Goat</span>
+                    </div>
+                    <div class="tier-items" data-tier="S+"></div>
+                </div>
+                <div class="tier-row" ondragover="allowDrop(event)" ondrop="dropToTier(event, 'S')">
+                    <div class="tier-label tier-s">
+                        <span>S</span>
+                        <span style="font-size: 10px; font-weight: 600; text-transform: uppercase; opacity: 0.9;">Amazing</span>
+                    </div>
+                    <div class="tier-items" data-tier="S"></div>
+                </div>
+                <div class="tier-row" ondragover="allowDrop(event)" ondrop="dropToTier(event, 'A')">
+                    <div class="tier-label tier-a">
+                        <span>A</span>
+                        <span style="font-size: 10px; font-weight: 600; text-transform: uppercase; opacity: 0.9;">Good</span>
+                    </div>
+                    <div class="tier-items" data-tier="A"></div>
+                </div>
+                <div class="tier-row" ondragover="allowDrop(event)" ondrop="dropToTier(event, 'B')">
+                    <div class="tier-label tier-b">
+                        <span>B</span>
+                        <span style="font-size: 10px; font-weight: 600; text-transform: uppercase; opacity: 0.9;">Mid</span>
+                    </div>
+                    <div class="tier-items" data-tier="B"></div>
+                </div>
+                <div class="tier-row" ondragover="allowDrop(event)" ondrop="dropToTier(event, 'C')">
+                    <div class="tier-label tier-c">
+                        <span>C</span>
+                        <span style="font-size: 10px; font-weight: 600; text-transform: uppercase; opacity: 0.9;">Bad</span>
+                    </div>
+                    <div class="tier-items" data-tier="C"></div>
+                </div>
+                <div class="tier-row" ondragover="allowDrop(event)" ondrop="dropToTier(event, 'D')">
+                    <div class="tier-label tier-d">
+                        <span>D</span>
+                        <span style="font-size: 10px; font-weight: 600; text-transform: uppercase; opacity: 0.9;">Trash</span>
+                    </div>
+                    <div class="tier-items" data-tier="D"></div>
+                </div>
+                <div class="tier-row" ondragover="allowDrop(event)" ondrop="dropToTier(event, 'F')">
+                    <div class="tier-label tier-f">
+                        <span>F</span>
+                        <span style="font-size: 10px; font-weight: 600; text-transform: uppercase; opacity: 0.9;">Dog Shit</span>
+                    </div>
+                    <div class="tier-items" data-tier="F"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Carregamento dos dados separados para o Construtor / Custom Mix -->
+    <script src="./JS/Data_Jogos.js"></script>
+    <script src="./JS/Data_Filmes.js"></script>
+    <script src="./JS/Data_Series.js"></script>
+    <script src="./JS/Data_Animes.js"></script>
+    
+    <script src="./JS/builder.js"></script>
+    <script src="./JS/Save.js"></script>
+</body>
+</html>

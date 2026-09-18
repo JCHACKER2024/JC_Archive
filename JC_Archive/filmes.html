@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies Tier List - JCArchive</title>
+    <link rel="stylesheet" href="./CSS/main.css">
+    <link rel="stylesheet" href="./CSS/Archive.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo"><a href="index.html">JCArchive</a></div>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="jogos.html">Games</a>
+            <a href="filmes.html" class="active">Movies</a>
+            <a href="series.html">Series</a>
+            <a href="animes.html">Anime</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="archive-header">
+            <h1>Movies Tier List</h1>
+            <div class="filters">
+                <select id="genre-filter">
+                    <option value="all">All Genres</option>
+                    <option value="Action">Action</option>
+                    <option value="Animation">Animation</option>
+                    <option value="Anime">Anime</option>
+                    <option value="Adventure">Adventure</option>
+                    <option value="Comedy">Comedy</option>
+                    <option value="Drama">Drama</option>
+                    <option value="Superhero">Superhero</option>
+                    <option value="Horror">Horror</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="filmes-tier-container" class="tier-container"></div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="./JS/Data_Filmes.js"></script>
+    <script src="./JS/render.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            renderizarTabelaMedia(dadosFilmes, 'filmes-tier-container', 'genre-filter', 'genero');
+        });
+    </script>
+</body>
+</html>
