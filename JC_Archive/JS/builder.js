@@ -177,3 +177,17 @@ function dropToPool(ev) {
         pool.appendChild(element);
     }
 }
+// Auto-scroll da página durante o drag, quando o cursor se aproxima do topo/fundo do ecrã
+const SCROLL_ZONE = 40;   // pixels a partir da margem que ativam o scroll
+const SCROLL_SPEED = 15;  // pixels por evento de dragover
+
+document.addEventListener('dragover', (e) => {
+    const y = e.clientY;
+    const alturaJanela = window.innerHeight;
+
+    if (y < SCROLL_ZONE) {
+        window.scrollBy(0, -SCROLL_SPEED);
+    } else if (y > alturaJanela - SCROLL_ZONE) {
+        window.scrollBy(0, SCROLL_SPEED);
+    }
+});
