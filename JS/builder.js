@@ -11,6 +11,20 @@ function initBuilder(category) {
         return;
     }
 
+    // --- GESTÃO DO BOTÃO SELECIONADO ---
+    // 1. Remove a classe 'active-category' de todos os botões do painel de configuração
+    const botoes = document.querySelectorAll('.setup-options .setup-btn');
+    botoes.forEach(btn => btn.classList.remove('active-category'));
+
+    // 2. Adiciona a classe 'active-category' apenas ao botão correspondente à categoria escolhida
+    botoes.forEach(btn => {
+        const onclickAttr = btn.getAttribute('onclick');
+        if (onclickAttr && onclickAttr.includes(`'${category}'`)) {
+            btn.classList.add('active-category');
+        }
+    });
+    // -----------------------------------
+
     // Limpar barra de pesquisa ao iniciar nova categoria
     if (searchInput) searchInput.value = '';
     
@@ -177,6 +191,7 @@ function dropToPool(ev) {
         pool.appendChild(element);
     }
 }
+
 // Auto-scroll da página durante o drag, quando o cursor se aproxima do topo/fundo do ecrã
 const SCROLL_ZONE = 40;   // pixels a partir da margem que ativam o scroll
 const SCROLL_SPEED = 15;  // pixels por evento de dragover

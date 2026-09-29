@@ -4,12 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JCArchive</title>
-    <link rel="stylesheet" href="/CSS/Main.css">
-    <!-- FontAwesome para o ícone do botão -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Biblioteca html2canvas -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="CSS/Main.css">
 </head>
+
 <body>
 
     <header>
@@ -57,7 +54,7 @@
                 <button class="setup-btn" onclick="initBuilder('filmes')">Movies</button>
                 <button class="setup-btn" onclick="initBuilder('series')">Series</button>
                 <button class="setup-btn" onclick="initBuilder('animes')">Animes</button>
-                <button class="setup-btn" onclick="initBuilder('mix')" style="border-color: var(--accent-glow);">Custom Mix (All)</button>
+                <button class="setup-btn" onclick="initBuilder('mix')">Custom Mix (All)</button>
             </div>
         </div>
 
@@ -145,11 +142,11 @@
     </main>
 
     <!-- Carregamento dos dados separados para o Construtor / Custom Mix -->
-    <script src="../JS/Data_Jogos.js"></script>
-    <script src="../JS/Data_Filmes.js"></script>
-    <script src="../JS/Data_Series.js"></script>
-    <script src="../JS/Data_Animes.js"></script>   
-    <script src="../JS/builder.js"></script>
-    <script src="../JS/Save.js"></script>
+    <script src="JS/Data_Jogos.js"></script>
+    <script src="JS/Data_Filmes.js"></script>
+    <script src="JS/Data_Series.js"></script>
+    <script src="JS/Data_Animes.js"></script>   
+    <script src="JS/builder.js"></script>
+    <script src="JS/Save.js"></script>
 </body>
 </html>
