@@ -89,13 +89,17 @@ function renderizarTabelaMedia(dados, containerId, selectFilterId, tipoFiltroCha
         const selectElement = document.getElementById(selectFilterId);
         if (selectElement) {
             selectElement.onchange = (e) => {
-                const valorFiltro = e.target.value;
+                const valorFiltro = e.target.value.toLowerCase();
                 if (valorFiltro === 'all') {
                     desenhar(dados);
                 } else {
                     const filtrados = dados.filter(item => {
                         const prop = item[tipoFiltroChave] || item.genero;
-                        return prop && prop.toLowerCase() === valorFiltro.toLowerCase();
+                        if (!prop) return false;
+                        // Suporta géneros compostos, ex.: "Horror / Science Fiction"
+                        return String(prop)
+                            .split('/')
+                            .some(g => g.trim().toLowerCase() === valorFiltro);
                     });
                     desenhar(filtrados);
                 }
