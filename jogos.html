@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games Tier List - JCArchive</title>
+    <link rel="stylesheet" href="./CSS/main.css">
+    <link rel="stylesheet" href="./CSS/Archive.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo"><a href="index.html">JCArchive</a></div>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="jogos.html" class="active">Games</a>
+            <a href="filmes.html">Movies</a>
+            <a href="series.html">Series</a>
+            <a href="animes.html">Anime</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="archive-header">
+            <h1>Games Tier List</h1>
+            <div class="filters">
+                <select id="platform-filter">
+                    <option value="all">All Platforms</option>
+                    <option value="Computer">Computer</option>
+                    <option value="Playstation">Playstation</option>
+                    <option value="Mobile">Mobile</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="jogos-tier-container" class="tier-container"></div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="./JS/Data_Jogos.js"></script>
+    <script src="./JS/render.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            renderizarTabelaMedia(dadosJogos, 'jogos-tier-container', 'platform-filter', 'plataforma');
+        });
+    </script>
+</body>
+</html>

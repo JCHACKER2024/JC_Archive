@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Tier List - JCArchive</title>
+    <link rel="stylesheet" href="./CSS/main.css">
+    <link rel="stylesheet" href="./CSS/Archive.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo"><a href="index.html">JCArchive</a></div>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="jogos.html">Games</a>
+            <a href="filmes.html">Movies</a>
+            <a href="series.html">Series</a>
+            <a href="animes.html" class="active">Anime</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="archive-header">
+            <h1>Anime Tier List</h1>
+        </div>
+
+        <div id="animes-tier-container" class="tier-container"></div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="./JS/Data_Animes.js"></script>
+    <script src="./JS/render.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            renderizarTabelaMedia(dadosAnimes, 'animes-tier-container');
+        });
+    </script>
+</body>
+</html>
