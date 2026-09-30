@@ -157,7 +157,7 @@ const dadosFilmes = [
     {tier: "S", titulo: "Homefront", ano: 2013, genero: "Action"},
     {tier: "S", titulo: "Rio 2", ano: 2014, genero: "Animation"},
     {tier: "S", titulo: "John Wick", ano: 2014, genero: "Action"},
-    {tier: "S", titulo: "In the Heart ao Sea", ano: 2015, genero: "Drama"},
+    {tier: "S", titulo: "In the Heart of the Sea", ano: 2015, genero: "Drama"},
     {tier: "S", titulo: "One Piece Film: Gold", ano: 2016, genero: "Anime"},
     {tier: "S", titulo: "Cars 3", ano: 2017, genero: "Animation"},
     {tier: "S", titulo: "Hotel Transylvania 3: Summer Vacation", ano: 2018, genero: "Animation"},
@@ -177,7 +177,7 @@ const dadosFilmes = [
     {tier: "S", titulo: "The Meg 2: The Trench", ano: 2023, genero: "Science Fiction"},
     {tier: "S", titulo: "Ant-Man and the Wasp: Quantumania", ano: 2023, genero: "Superhero"},
     {tier: "S", titulo: "Extraction 2", ano: 2023, genero: "Action"},
-    {tier: "S", titulo: "Spy × Family Code: White", ano: 2023, genero: "Anime"},
+    {tier: "S", titulo: "Spy x Family Code: White", ano: 2023, genero: "Anime"},
     {tier: "S", titulo: "Black Clover: Sword of the Wizard King", ano: 2023, genero: "Anime"},
     {tier: "S", titulo: "Venom: The Last Dance", ano: 2024, genero: "Superhero"},
     {tier: "S", titulo: "Mufasa: The Lion King", ano: 2024, genero: "Drama"},
@@ -194,6 +194,7 @@ const dadosFilmes = [
     {tier: "S", titulo: "Fast & Furious Presents: Hobbs & Shaw", ano: 2019, genero: "Action"},
     {tier: "S", titulo: "The Super Mario Bros", ano: 2023, genero: "Animation"},
     {tier: "S", titulo: "The Super Mario Galaxy", ano: 2026, genero: "Animation"},
+    {tier: "S", titulo: "Colony", ano: 2026, genero: "Horror"},
 
     // --- TIER A ---
     {tier: "A", titulo: "The Jungle Book", ano: 1967, genero: "Animation"},
@@ -233,7 +234,7 @@ const dadosFilmes = [
     {tier: "A", titulo: "Jumanji: The Next Level", ano: 2019, genero: "Action"},
     {tier: "A", titulo: "Rambo: Last Blood", ano: 2019, genero: "Action"},
     {tier: "A", titulo: "How to Train Your Dragon 3", ano: 2019, genero: "Animation"},
-    {tier: "A", titulo: "The Plataform", ano: 2019, genero: "Horror"},
+    {tier: "A", titulo: "The Platform", ano: 2019, genero: "Horror"},
     {tier: "A", titulo: "Spider-Man: No Way Home", ano: 2021, genero: "Superhero"},
     {tier: "A", titulo: "Red Notice ", ano: 2021, genero: "Action"},
     {tier: "A", titulo: "Jujutsu Kaisen 0", ano: 2021, genero: "Anime"},
@@ -255,6 +256,7 @@ const dadosFilmes = [
     {tier: "A", titulo: "Jurassic Park 2", ano: 1997, genero: "Action / Science Fiction"},
     {tier: "A", titulo: "Fast & Furious 5", ano: 2011, genero: "Action"},
     {tier: "A", titulo: "Fast & Furious 6", ano: 2013, genero: "Action"},
+    {tier: "A", titulo: "Resident Evil", ano: 2026, genero: "Horror"},
 
     // --- TIER B ---
     {tier: "B", titulo: "Peter Pan", ano: 1953, genero: "Animation"},
@@ -276,6 +278,8 @@ const dadosFilmes = [
     {tier: "B", titulo: "Five Nights at Freddy's 2", ano: 2025, genero: "Horror"},
     {tier: "B", titulo: "Young Washington", ano: 2026, genero: "Action"},
     {tier: "B", titulo: "Fast & Furious 9", ano: 2021, genero: "Action"},
+    {tier: "B", titulo: "Hope", ano: 2026, genero: "Science Fiction"},
+    {tier: "B", titulo: "The End of Oak Street", ano: 2026, genero: "Horror / Science Fiction"},
 
     // --- TIER C ---
     {tier: "C", titulo: "The Wolf of Wall Street", ano: 2013, genero: "Drama"},
@@ -283,12 +287,12 @@ const dadosFilmes = [
     {tier: "C", titulo: "Deadpool & Wolverine", ano: 2024, genero: "Superhero"},
     {tier: "C", titulo: "Kung Fu Panda 4", ano: 2024, genero: "Animation"},
     {tier: "C", titulo: "Nobody 2", ano: 2025, genero: "Action"},
-    {tier: "C", titulo: "Jurasic world: Rebirth", ano: 2025, genero: "Action / Science Fiction"},
+    {tier: "C", titulo: "Jurassic World: Rebirth", ano: 2025, genero: "Action / Science Fiction"},
 
     // --- TIER D ---
     {tier: "D", titulo: "Titanic", ano: 1997, genero: "Drama"},
     {tier: "D", titulo: "365 Days", ano: 2020, genero: "Drama"},
-    {tier: "D", titulo: "Predador Badlands", ano: 2025, genero: "Action / Science Fiction"},
+    {tier: "D", titulo: "Predator: Badlands", ano: 2025, genero: "Action / Science Fiction"},
     {tier: "D", titulo: "Sinners", ano: 2025, genero: "Horror"},
 
     // --- TIER F ---
