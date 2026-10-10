@@ -355,6 +355,9 @@ header {
     border: 1px solid #324475;
     box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    touch-action: manipulation;   /* permite scroll no touch; o drag usa pressão longa */
     transition: all 0.2s ease;
 
     width: 100%;
@@ -396,6 +399,49 @@ header {
 
 .draggable-item:active {
     cursor: grabbing;
+}
+
+.draggable-item.dragging {
+    opacity: 0.35;
+    border-style: dashed;
+}
+
+#builder-section .draggable-item.selected {
+    background: #243258;
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 0 2px var(--accent-cyan), 0 0 16px rgba(6, 182, 212, 0.6);
+}
+
+.drag-ghost {
+    background: #243258;
+    border-color: var(--accent-cyan);
+    opacity: 0.95;
+    transform: scale(1.05) rotate(2deg);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.6), 0 0 14px rgba(6, 182, 212, 0.5);
+    cursor: grabbing;
+    transition: none !important;
+}
+
+body.is-dragging,
+body.is-dragging * {
+    cursor: grabbing !important;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* Destaque do tier/pool onde vai cair */
+.tier-items,
+.pool-container {
+    transition: background-color 0.15s ease;
+}
+
+.tier-items.drop-hover {
+    background: #19203a;
+}
+
+.pool-container.drop-hover {
+    background: #0a0f1d;
+    border-color: var(--accent-cyan);
 }
 
 /* ==========================================
@@ -472,4 +518,227 @@ header {
     background-color: #7c3aed;
     border-color: var(--accent-cyan);
     box-shadow: 0 0 15px var(--accent-glow);
+}
+
+/* Botão Reset */
+.btn-reset {
+    background-color: #141b30;
+    color: var(--text-main);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 16px;
+    white-space: nowrap;
+    border: 1px solid #283559;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.25s ease;
+}
+
+.btn-reset:hover {
+    background-color: rgba(236, 72, 153, 0.2);
+    border-color: var(--accent-pink);
+    box-shadow: 0 0 15px rgba(236, 72, 153, 0.35);
+}
+
+/* ==========================================
+   RESPONSIVE (TABLET / TELEMÓVEL)
+   ========================================== */
+@media (max-width: 900px) {
+    header {
+        padding: 14px 20px;
+    }
+
+    .container {
+        margin: 28px auto;
+    }
+
+    .hero h1 {
+        font-size: 2.3rem;
+    }
+
+    .builder-section {
+        padding: 22px;
+    }
+
+    .builder-toolbar {
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 700px) {
+    body {
+        background-attachment: scroll; /* 'fixed' é lento/instável em iOS */
+    }
+
+    header {
+        position: static;
+        flex-direction: column;
+        gap: 10px;
+        padding: 12px 16px;
+    }
+
+    .logo a {
+        font-size: 1.25rem;
+    }
+
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 6px;
+    }
+
+    .nav-links a {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+
+    .container {
+        margin: 20px auto;
+        padding: 0 12px;
+    }
+
+    .hero {
+        margin-bottom: 26px;
+    }
+
+    .hero h1 {
+        font-size: 1.9rem;
+    }
+
+    .hero p {
+        font-size: 0.95rem;
+    }
+
+    .hub-grid {
+        gap: 14px;
+        margin-bottom: 28px;
+    }
+
+    .hub-card {
+        padding: 20px 16px;
+    }
+
+    .setup-panel {
+        padding: 22px 16px;
+        margin-bottom: 24px;
+    }
+
+    .setup-panel h2 {
+        font-size: 1.2rem;
+    }
+
+    .setup-options {
+        gap: 8px;
+    }
+
+    .setup-options .setup-btn {
+        flex: 1 1 calc(50% - 8px);
+        padding: 10px 12px;
+    }
+
+    .builder-section {
+        padding: 14px;
+        border-radius: 12px;
+    }
+
+    /* Toolbar em coluna */
+    .builder-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .toolbar-group {
+        width: 100%;
+    }
+
+    #tier-custom-title {
+        width: 100% !important;
+        font-size: 17px;
+    }
+
+    .toolbar-group:nth-child(2) {
+        flex: none;
+    }
+
+    .input-wrapper {
+        width: auto;
+        flex: 1;
+    }
+
+    /* 16px evita o zoom automático do iOS ao focar */
+    .builder-toolbar input[type="text"]:not(#tier-custom-title) {
+        font-size: 16px;
+    }
+
+    .btn-add {
+        flex: none;
+    }
+
+    .btn-reset,
+    .btn-save {
+        flex: 1;
+    }
+
+    /* Pool e tiers com 2 colunas */
+    .pool-container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        max-height: 300px;
+        padding: 10px;
+        gap: 6px;
+    }
+
+    .tier-items {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 6px;
+        padding: 6px;
+    }
+
+    .tier-row {
+        min-height: 60px;
+    }
+
+    .tier-label {
+        min-width: 58px;
+        max-width: 58px;
+        font-size: 22px;
+        padding: 4px;
+    }
+
+    .tier-label span[contenteditable] {
+        font-size: 8px !important;
+    }
+
+    .draggable-item {
+        padding: 6px 8px;
+        min-height: 44px;
+    }
+
+    .draggable-item strong {
+        font-size: 0.82rem;
+        white-space: normal;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+    .draggable-item span {
+        font-size: 0.68rem;
+    }
+}
+
+@media (hover: none) {
+    .draggable-item:hover {
+        background: #1a2238;
+        border-color: #324475;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+
+    .hub-card:hover {
+        transform: none;
+    }
 }

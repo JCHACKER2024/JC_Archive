@@ -77,8 +77,11 @@
                     </button>
                 </div>
                 
-                <!-- 3. Botão de Guardar à direita -->
+                <!-- 3. Reset e Guardar à direita -->
                 <div class="toolbar-group">
+                    <button onclick="resetTierList()" class="setup-btn btn-reset">
+                        <i class="fas fa-rotate-left"></i> Reset
+                    </button>
                     <button onclick="guardarTierList()" class="setup-btn btn-save">
                         <i class="fas fa-download"></i> Save as Image
                     </button>
@@ -141,12 +144,13 @@
         </div>
     </main>
 
-    <!-- Carregamento dos dados separados para o Construtor / Custom Mix -->
+        <!-- Carregamento dos dados separados para o Construtor / Custom Mix -->
     <script src="JS/Data_Jogos.js"></script>
     <script src="JS/Data_Filmes.js"></script>
     <script src="JS/Data_Series.js"></script>
-    <script src="JS/Data_Animes.js"></script>   
+    <script src="JS/Data_Animes.js"></script>
     <script src="JS/Builder.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="JS/Save.js"></script>
 </body>
 </html>
