@@ -357,7 +357,7 @@ header {
     user-select: none;
     -webkit-user-select: none;
     -webkit-touch-callout: none;
-    touch-action: manipulation;   /* permite scroll no touch; o drag usa pressão longa */
+    touch-action: manipulation; 
     transition: all 0.2s ease;
 
     width: 100%;
@@ -429,7 +429,6 @@ body.is-dragging * {
     -webkit-user-select: none;
 }
 
-/* Destaque do tier/pool onde vai cair */
 .tier-items,
 .pool-container {
     transition: background-color 0.15s ease;
@@ -474,17 +473,15 @@ body.is-dragging * {
     box-sizing: border-box;
 }
 
-/* Grupo 2: Pesquisa com comprimento diminuído */
 .toolbar-group:nth-child(2) {
     flex: 0 1 auto;
 }
 
 .input-wrapper {
     position: relative;
-    width: 300px; /* Comprimento reduzido da barra de pesquisa */
+    width: 300px;
 }
 
-/* Estilo para os inputs normais (como o de pesquisa) */
 .builder-toolbar input[type="text"]:not(#tier-custom-title) {
     width: 100%;
     padding: 10px 14px;
@@ -497,7 +494,6 @@ body.is-dragging * {
     box-sizing: border-box;
 }
 
-/* Botões Add e Save */
 .btn-add, .btn-save {
     background-color: var(--accent-glow);
     color: var(--text-main);
@@ -520,7 +516,6 @@ body.is-dragging * {
     box-shadow: 0 0 15px var(--accent-glow);
 }
 
-/* Botão Reset */
 .btn-reset {
     background-color: #141b30;
     color: var(--text-main);
@@ -544,7 +539,7 @@ body.is-dragging * {
 }
 
 /* ==========================================
-   RESPONSIVE (TABLET / TELEMÓVEL)
+   RESPONSIVE (TABLET/TELEMÓVEL)
    ========================================== */
 @media (max-width: 900px) {
     header {
@@ -570,7 +565,7 @@ body.is-dragging * {
 
 @media (max-width: 700px) {
     body {
-        background-attachment: scroll; /* 'fixed' é lento/instável em iOS */
+        background-attachment: scroll;
     }
 
     header {
@@ -644,7 +639,6 @@ body.is-dragging * {
         border-radius: 12px;
     }
 
-    /* Toolbar em coluna */
     .builder-toolbar {
         flex-direction: column;
         align-items: stretch;
@@ -669,7 +663,6 @@ body.is-dragging * {
         flex: 1;
     }
 
-    /* 16px evita o zoom automático do iOS ao focar */
     .builder-toolbar input[type="text"]:not(#tier-custom-title) {
         font-size: 16px;
     }
@@ -683,7 +676,6 @@ body.is-dragging * {
         flex: 1;
     }
 
-    /* Pool e tiers com 2 colunas */
     .pool-container {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         max-height: 300px;

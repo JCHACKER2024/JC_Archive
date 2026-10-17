@@ -78,7 +78,7 @@
 }
 
 /* ==========================================
-   MEDIA CARDS (Suporta também .draggable-item para compatibilidade)
+   MEDIA CARDS
    ========================================== */
 .media-card,
 .draggable-item {
@@ -180,7 +180,6 @@
         padding: 10px 12px;
     }
 
-    /* Tiers: label estreita ao lado, 2 colunas de cartões */
     .tier-container {
         gap: 8px;
     }

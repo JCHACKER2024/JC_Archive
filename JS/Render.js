@@ -5,7 +5,6 @@ function renderizarTabelaMedia(dados, containerId, selectFilterId, tipoFiltroCha
     const container = document.getElementById(containerId);
     if (!container) return;
 
-    // Função interna que desenha os dados (filtrados ou totais)
     function desenhar(dadosParaRenderizar) {
         container.innerHTML = '';
 
@@ -53,14 +52,12 @@ function renderizarTabelaMedia(dados, containerId, selectFilterId, tipoFiltroCha
                     const nome = item.jogo || item.titulo || 'Desconhecido';
                     let subInfo = [];
 
-                    // Se tiver seasons, adiciona. Se não, usa o ano (evitando o "Mixed")
                     if (item.season) {
                         subInfo.push(`Season ${item.season}`);
                     } else if (item.ano && item.ano !== "Mixed") {
                         subInfo.push(item.ano);
                     }
 
-                    // Adiciona o género ou o filtro correspondente
                     const valorFiltro = item[tipoFiltroChave] || item.genero;
                     if (valorFiltro) {
                         subInfo.push(valorFiltro);
@@ -81,10 +78,8 @@ function renderizarTabelaMedia(dados, containerId, selectFilterId, tipoFiltroCha
         });
     }
 
-    // Desenhar inicialmente todos os dados
     desenhar(dados);
 
-    // Configurar o evento do filtro se o ID do select existir na página
     if (selectFilterId) {
         const selectElement = document.getElementById(selectFilterId);
         if (selectElement) {
@@ -96,7 +91,6 @@ function renderizarTabelaMedia(dados, containerId, selectFilterId, tipoFiltroCha
                     const filtrados = dados.filter(item => {
                         const prop = item[tipoFiltroChave] || item.genero;
                         if (!prop) return false;
-                        // Suporta géneros compostos, ex.: "Horror / Science Fiction"
                         return String(prop)
                             .split('/')
                             .some(g => g.trim().toLowerCase() === valorFiltro);

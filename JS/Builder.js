@@ -1,15 +1,15 @@
 /**
- * JCArchive - Tier List Builder
- * - Drag and drop com Pointer Events (rato + touch)
- * - Item é inserido na posição onde se larga
+ * - Rato: arrastar e largar (Pointer Events), com inserção na posição
+ * - Toque: tocar para selecionar, tocar no tier/pool para colocar
  * - Duplo clique / duplo toque devolve o item ao pool
  * - Progresso guardado em localStorage
+ * - Custom: pool vazia, só mostra itens ao pesquisar (jogos, filmes, séries, animes)
  */
 
 const STORAGE_KEY = 'jcarchive-tierlist-v1';
-const DRAG_THRESHOLD = 6;     // pixels antes de começar o drag
-const DOUBLE_TAP_MS = 300;    // intervalo máximo do duplo clique/toque
-const SCROLL_ZONE = 60;       // zona junto às margens que ativa o auto-scroll
+const DRAG_THRESHOLD = 6;
+const DOUBLE_TAP_MS = 300;
+const SCROLL_ZONE = 60;
 const SCROLL_SPEED = 14;
 
 let categoriaAtual = null;
@@ -18,37 +18,34 @@ let ordemCounter = 0;
 let drag = null;
 let ultimoTap = { item: null, time: 0 };
 
-/* ---------------------------------------------------------------
-   DADOS / INICIALIZAÇÃO
----------------------------------------------------------------- */
-
 function obterDadosCategoria(category) {
-    let rawItems = [];
-    let titleText = "My Custom Tier List";
+    const jogos = (typeof dadosJogos !== 'undefined') ? dadosJogos : (typeof jogosData !== 'undefined' ? jogosData : (typeof fallbackJogos !== 'undefined' ? fallbackJogos : []));
+    const filmes = (typeof dadosFilmes !== 'undefined') ? dadosFilmes : (typeof filmesData !== 'undefined' ? filmesData : (typeof fallbackFilmes !== 'undefined' ? fallbackFilmes : []));
+    const series = (typeof dadosSeries !== 'undefined') ? dadosSeries : (typeof seriesData !== 'undefined' ? seriesData : (typeof fallbackSeries !== 'undefined' ? fallbackSeries : []));
+    const animes = (typeof dadosAnimes !== 'undefined') ? dadosAnimes : (typeof animesData !== 'undefined' ? animesData : (typeof fallbackAnimes !== 'undefined' ? fallbackAnimes : []));
+
+    const simples = (lista) => lista.map(o => ({ nome: extrairNome(o), cat: '' }));
+    const comTag = (lista, cat) => lista.map(o => ({ nome: extrairNome(o), cat }));
 
     if (category === 'jogos') {
-        rawItems = (typeof dadosJogos !== 'undefined') ? dadosJogos : (typeof jogosData !== 'undefined' ? jogosData : (typeof fallbackJogos !== 'undefined' ? fallbackJogos : []));
-        titleText = "Games Custom Tier List";
-        if (rawItems.length === 0) console.warn("Aviso: 'dadosJogos' não foi encontrado ou está vazio!");
-    } else if (category === 'filmes') {
-        rawItems = (typeof dadosFilmes !== 'undefined') ? dadosFilmes : (typeof filmesData !== 'undefined' ? filmesData : (typeof fallbackFilmes !== 'undefined' ? fallbackFilmes : []));
-        titleText = "Movies Custom Tier List";
-    } else if (category === 'series') {
-        rawItems = (typeof dadosSeries !== 'undefined') ? dadosSeries : (typeof seriesData !== 'undefined' ? seriesData : (typeof fallbackSeries !== 'undefined' ? fallbackSeries : []));
-        titleText = "Series Custom Tier List";
-    } else if (category === 'animes') {
-        rawItems = (typeof dadosAnimes !== 'undefined') ? dadosAnimes : (typeof animesData !== 'undefined' ? animesData : (typeof fallbackAnimes !== 'undefined' ? fallbackAnimes : []));
-        titleText = "Animes Custom Tier List";
-    } else if (category === 'mix') {
-        const j = (typeof dadosJogos !== 'undefined') ? dadosJogos : [];
-        const f = (typeof dadosFilmes !== 'undefined') ? dadosFilmes : [];
-        const s = (typeof dadosSeries !== 'undefined') ? dadosSeries : [];
-        const a = (typeof dadosAnimes !== 'undefined') ? dadosAnimes : [];
-        rawItems = [...j, ...f, ...s, ...a];
-        titleText = "Custom Mix Tier List (All Media)";
+        if (jogos.length === 0) console.warn("Aviso: 'dadosJogos' não foi encontrado ou está vazio!");
+        return { itens: simples(jogos), titleText: "Games Custom Tier List" };
     }
-
-    return { rawItems, titleText };
+    if (category === 'filmes') return { itens: simples(filmes), titleText: "Movies Custom Tier List" };
+    if (category === 'series') return { itens: simples(series), titleText: "Series Custom Tier List" };
+    if (category === 'animes') return { itens: simples(animes), titleText: "Animes Custom Tier List" };
+    if (category === 'mix') {
+        return {
+            itens: [
+                ...comTag(jogos, 'Game'),
+                ...comTag(filmes, 'Movie'),
+                ...comTag(series, 'Series'),
+                ...comTag(animes, 'Anime')
+            ],
+            titleText: "My Custom Tier List"
+        };
+    }
+    return { itens: [], titleText: "My Custom Tier List" };
 }
 
 function marcarCategoria(category) {
@@ -89,31 +86,29 @@ function initBuilder(category) {
     pool.innerHTML = '';
     document.querySelectorAll('.tier-items').forEach(el => el.innerHTML = '');
 
-    const { rawItems, titleText } = obterDadosCategoria(category);
+    const { itens, titleText } = obterDadosCategoria(category);
 
     if (inputTitle) inputTitle.value = titleText;
 
     builderSection.style.display = 'block';
 
-    // Remover duplicados por título (séries/animes têm uma entrada por season)
-    const titulosVistos = new Set();
-    const itemsUnicos = rawItems.filter(objItem => {
-        const chave = extrairNome(objItem).toLowerCase();
-        if (titulosVistos.has(chave)) return false;
-        titulosVistos.add(chave);
+    const vistos = new Set();
+    const itensUnicos = itens.filter(({ nome, cat }) => {
+        const chave = cat + '|' + nome.toLowerCase();
+        if (vistos.has(chave)) return false;
+        vistos.add(chave);
         return true;
     });
 
     ordemCounter = 0;
 
-    if (itemsUnicos.length > 0) {
-        itemsUnicos.forEach(objItem => {
-            criarElementoArrastavel(extrairNome(objItem), pool);
-        });
+    if (itensUnicos.length > 0) {
+        itensUnicos.forEach(({ nome, cat }) => criarElementoArrastavel(nome, pool, undefined, cat));
     } else {
         pool.innerHTML = '<p style="color: var(--text-muted); grid-column: span 3; text-align: center; padding: 20px;">Nenhum item encontrado para esta categoria. Verifica se o ficheiro de dados foi carregado.</p>';
     }
 
+    aplicarFiltro();
     guardarEstado();
     builderSection.scrollIntoView({ behavior: 'smooth' });
 }
@@ -125,7 +120,7 @@ function extrairNome(dadosItem) {
     return String(dadosItem);
 }
 
-function criarElementoArrastavel(nome, containerDestino, ordem) {
+function criarElementoArrastavel(nome, containerDestino, ordem, cat) {
     const item = document.createElement('div');
     item.className = 'draggable-item';
     item.id = 'item-' + (++idCounter);
@@ -136,23 +131,47 @@ function criarElementoArrastavel(nome, containerDestino, ordem) {
     strong.textContent = nome;
     item.appendChild(strong);
 
+    if (cat) {
+        item.dataset.cat = cat;
+        const span = document.createElement('span');
+        span.textContent = cat;
+        item.appendChild(span);
+    }
+
     containerDestino.appendChild(item);
     return item;
 }
-
-/* ---------------------------------------------------------------
-   PESQUISA / ADICIONAR ITEM
----------------------------------------------------------------- */
 
 function aplicarFiltro() {
     const pool = document.getElementById('game-pool');
     const searchInput = document.getElementById('pool-search-input');
     if (!pool) return;
+
     const termo = (searchInput ? searchInput.value : '').toLowerCase().trim();
+    const soPesquisa = categoriaAtual === 'mix';
+    let visiveis = 0;
 
     pool.querySelectorAll(':scope > .draggable-item').forEach(item => {
-        item.style.display = item.dataset.nome.toLowerCase().includes(termo) ? 'flex' : 'none';
+        const coincide = item.dataset.nome.toLowerCase().includes(termo);
+        const mostrar = soPesquisa ? (termo !== '' && coincide) : coincide;
+        item.style.display = mostrar ? 'flex' : 'none';
+        if (mostrar) visiveis++;
     });
+
+    let dica = pool.querySelector(':scope > .pool-hint');
+    if (soPesquisa && visiveis === 0) {
+        if (!dica) {
+            dica = document.createElement('p');
+            dica.className = 'pool-hint';
+            dica.style.cssText = 'grid-column: 1 / -1; margin: 0; padding: 20px; text-align: center; color: var(--text-muted); font-size: 0.9rem;';
+            pool.appendChild(dica);
+        }
+        dica.textContent = termo === ''
+            ? 'Type above to search through games, movies, series, and anime.'
+            : 'No results found. Press Add (or Enter) to create "' + searchInput.value.trim() + '".';
+    } else if (dica) {
+        dica.remove();
+    }
 }
 
 function filtrarOuAdicionarItem() {
@@ -181,14 +200,10 @@ function adicionarItemManual() {
         criarElementoArrastavel(valor, pool);
     }
 
-    searchInput.value = '';
+    if (categoriaAtual !== 'mix') searchInput.value = '';
     aplicarFiltro();
     guardarEstado();
 }
-
-/* ---------------------------------------------------------------
-   DEVOLVER AO POOL / RESET
----------------------------------------------------------------- */
 
 function devolverAoPool(item) {
     const pool = document.getElementById('game-pool');
@@ -210,17 +225,13 @@ function resetTierList() {
     document.querySelectorAll('.tier-items .draggable-item').forEach(devolverAoPool);
 }
 
-/* ---------------------------------------------------------------
-   PERSISTÊNCIA (localStorage)
----------------------------------------------------------------- */
-
 function lerEstado() {
     const pool = document.getElementById('game-pool');
     const inputTitle = document.getElementById('tier-custom-title');
 
     const itensDe = (container) =>
         [...container.querySelectorAll(':scope > .draggable-item')]
-            .map(el => ({ n: el.dataset.nome, o: Number(el.dataset.order) }));
+            .map(el => ({ n: el.dataset.nome, o: Number(el.dataset.order), c: el.dataset.cat || '' }));
 
     const tiers = {};
     const labels = {};
@@ -264,20 +275,22 @@ function restaurarEstado() {
     const pool = document.getElementById('game-pool');
     const builderSection = document.getElementById('builder-section');
     const inputTitle = document.getElementById('tier-custom-title');
+    const searchInput = document.getElementById('pool-search-input');
     if (!pool || !builderSection) return;
 
     categoriaAtual = estado.category;
     marcarCategoria(categoriaAtual);
 
     if (inputTitle && estado.title) inputTitle.value = estado.title;
+    if (searchInput) searchInput.value = '';
 
     pool.innerHTML = '';
     document.querySelectorAll('.tier-items').forEach(el => el.innerHTML = '');
 
     let maxOrdem = -1;
     const criar = (lista, container) => {
-        (lista || []).forEach(({ n, o }) => {
-            criarElementoArrastavel(n, container, o);
+        (lista || []).forEach(({ n, o, c }) => {
+            criarElementoArrastavel(n, container, o, c);
             if (o > maxOrdem) maxOrdem = o;
         });
     };
@@ -298,6 +311,7 @@ function restaurarEstado() {
 
     ordemCounter = maxOrdem + 1;
     builderSection.style.display = 'block';
+    aplicarFiltro();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -306,18 +320,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputTitle = document.getElementById('tier-custom-title');
     if (inputTitle) inputTitle.addEventListener('input', guardarEstado);
 
-    // Edição dos subtítulos dos tiers (Goat, Amazing, ...)
     document.addEventListener('input', (e) => {
         if (e.target.closest && e.target.closest('.tier-label [contenteditable]')) guardarEstado();
     });
 });
-
-/* ---------------------------------------------------------------
-   INTERAÇÃO
-   Rato:   arrastar e largar (Pointer Events).
-   Toque:  tocar num item para o selecionar; tocar num tier, no pool
-           ou noutro item para o colocar lá. O scroll funciona normal.
----------------------------------------------------------------- */
 
 let ultimoTipo = 'mouse';
 let selecionado = null;
@@ -331,7 +337,6 @@ function encontrarContainer(el) {
     return null;
 }
 
-// Devolve o irmão antes do qual o item deve ser inserido (null = fim)
 function encontrarReferencia(container, x, y, item) {
     const irmaos = [...container.querySelectorAll(':scope > .draggable-item')]
         .filter(el => el !== item && el.offsetParent !== null);
@@ -343,8 +348,6 @@ function encontrarReferencia(container, x, y, item) {
     }
     return null;
 }
-
-/* ---------- Toque: selecionar e colocar ---------- */
 
 function limparSelecao() {
     if (selecionado) selecionado.classList.remove('selected');
@@ -378,7 +381,6 @@ function colocarSelecionado(container) {
 function tocarItem(item) {
     const agora = Date.now();
 
-    // Duplo toque: devolve ao pool
     if (ultimoTap.item === item && agora - ultimoTap.time < DOUBLE_TAP_MS) {
         ultimoTap = { item: null, time: 0 };
         limparSelecao();
@@ -394,14 +396,12 @@ function tocarItem(item) {
     } else if (atual === item) {
         limparSelecao();
     } else {
-        // Coloca o item selecionado antes do item tocado
         item.parentNode.insertBefore(atual, item);
         limparSelecao();
         guardarEstado();
     }
 }
 
-// Antes do Save: não deixar o item "selecionado" aparecer na imagem
 document.addEventListener('click', (e) => {
     if (e.target.closest('.btn-save')) limparSelecao();
 }, true);
@@ -420,8 +420,6 @@ document.addEventListener('click', (e) => {
     const container = encontrarContainer(e.target);
     if (container) colocarSelecionado(container);
 });
-
-/* ---------- Rato: arrastar e largar ---------- */
 
 function iniciarDrag() {
     const { item } = drag;
@@ -500,17 +498,16 @@ function terminarDrag(cancelar) {
         document.body.classList.remove('is-dragging');
         document.querySelectorAll('.drop-hover').forEach(c => c.classList.remove('drop-hover'));
 
-        // Largado fora de qualquer tier/pool: volta ao sítio original
         if (cancelar || !d.sobreContainer) {
             d.origParent.insertBefore(d.item, d.origNext);
         }
+        aplicarFiltro();
         guardarEstado();
     } else if (!cancelar) {
         tratarCliqueRato(d.item);
     }
 }
 
-// Duplo clique (rato) devolve o item ao pool
 function tratarCliqueRato(item) {
     const agora = Date.now();
     if (ultimoTap.item === item && agora - ultimoTap.time < DOUBLE_TAP_MS) {
@@ -524,7 +521,7 @@ function tratarCliqueRato(item) {
 document.addEventListener('pointerdown', (e) => {
     ultimoTipo = e.pointerType;
 
-    if (e.pointerType === 'touch') return;                    // toque usa selecionar/colocar
+    if (e.pointerType === 'touch') return;
     if (e.pointerType === 'mouse' && e.button !== 0) return;
     if (drag) return;
 

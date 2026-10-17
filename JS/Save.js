@@ -29,7 +29,6 @@ function guardarTierList() {
         ? inputTitle.value.trim()
         : "My Custom Tier List";
 
-    // Wrapper temporário isolado fora do ecrã
     const wrapper = document.createElement('div');
     wrapper.style.position = 'absolute';
     wrapper.style.left = '-9999px';
@@ -49,7 +48,6 @@ function guardarTierList() {
     `;
     wrapper.appendChild(headerDiv);
 
-    // Clonar e remover tiers vazios
     const clonedContainer = originalContainer.cloneNode(true);
     clonedContainer.style.width = '100%';
 
