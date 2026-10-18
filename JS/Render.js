@@ -1,6 +1,5 @@
-/**
- * Renderiza dinamicamente as tier lists e gere os filtros por categoria
- */
+/* RENDERIZAÇÃO DAS TIER LISTS E FILTROS */
+
 function renderizarTabelaMedia(dados, containerId, selectFilterId, tipoFiltroChave) {
     const container = document.getElementById(containerId);
     if (!container) return;
@@ -9,7 +8,7 @@ function renderizarTabelaMedia(dados, containerId, selectFilterId, tipoFiltroCha
         container.innerHTML = '';
 
         if (!dadosParaRenderizar || dadosParaRenderizar.length === 0) {
-            container.innerHTML = '<p style="color: var(--text-muted); text-align: center; padding: 20px;">Nenhum item encontrado.</p>';
+            container.innerHTML = '<p style="color: var(--text-muted); text-align: center; padding: 20px;">No items found.</p>';
             return;
         }
 
@@ -49,7 +48,7 @@ function renderizarTabelaMedia(dados, containerId, selectFilterId, tipoFiltroCha
                     const card = document.createElement('div');
                     card.className = 'draggable-item';
 
-                    const nome = item.jogo || item.titulo || 'Desconhecido';
+                    const nome = item.jogo || item.titulo || 'Unknown';
                     let subInfo = [];
 
                     if (item.season) {

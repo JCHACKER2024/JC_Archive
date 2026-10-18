@@ -1,10 +1,14 @@
 /**
+ * JCArchive - Tier List Builder
  * - Rato: arrastar e largar (Pointer Events), com inserção na posição
  * - Toque: tocar para selecionar, tocar no tier/pool para colocar
  * - Duplo clique / duplo toque devolve o item ao pool
  * - Progresso guardado em localStorage
+ * - Pesquisa por início do nome (sem distinguir maiúsculas/minúsculas nem acentos)
  * - Custom: pool vazia, só mostra itens ao pesquisar (jogos, filmes, séries, animes)
  */
+
+/* CONFIGURAÇÃO */
 
 const STORAGE_KEY = 'jcarchive-tierlist-v1';
 const DRAG_THRESHOLD = 6;
@@ -18,6 +22,8 @@ let ordemCounter = 0;
 let drag = null;
 let ultimoTap = { item: null, time: 0 };
 
+/* DADOS E INICIALIZAÇÃO */
+
 function obterDadosCategoria(category) {
     const jogos = (typeof dadosJogos !== 'undefined') ? dadosJogos : (typeof jogosData !== 'undefined' ? jogosData : (typeof fallbackJogos !== 'undefined' ? fallbackJogos : []));
     const filmes = (typeof dadosFilmes !== 'undefined') ? dadosFilmes : (typeof filmesData !== 'undefined' ? filmesData : (typeof fallbackFilmes !== 'undefined' ? fallbackFilmes : []));
@@ -28,7 +34,7 @@ function obterDadosCategoria(category) {
     const comTag = (lista, cat) => lista.map(o => ({ nome: extrairNome(o), cat }));
 
     if (category === 'jogos') {
-        if (jogos.length === 0) console.warn("Aviso: 'dadosJogos' não foi encontrado ou está vazio!");
+        if (jogos.length === 0) console.warn("Warning: 'dadosJogos' was not found or is empty!");
         return { itens: simples(jogos), titleText: "Games Custom Tier List" };
     }
     if (category === 'filmes') return { itens: simples(filmes), titleText: "Movies Custom Tier List" };
@@ -70,11 +76,11 @@ function initBuilder(category) {
     const searchInput = document.getElementById('pool-search-input');
 
     if (!pool || !builderSection) {
-        console.error("Erro crítico: Elementos 'game-pool' ou 'builder-section' não encontrados no HTML do index.");
+        console.error("Critical error: 'game-pool' or 'builder-section' element not found in the index HTML.");
         return;
     }
 
-    if (temItensNosTiers() && !confirm('Isto vai apagar a tier list atual. Continuar?')) {
+    if (temItensNosTiers() && !confirm('This will erase the current tier list. Continue?')) {
         return;
     }
 
@@ -105,7 +111,7 @@ function initBuilder(category) {
     if (itensUnicos.length > 0) {
         itensUnicos.forEach(({ nome, cat }) => criarElementoArrastavel(nome, pool, undefined, cat));
     } else {
-        pool.innerHTML = '<p style="color: var(--text-muted); grid-column: span 3; text-align: center; padding: 20px;">Nenhum item encontrado para esta categoria. Verifica se o ficheiro de dados foi carregado.</p>';
+        pool.innerHTML = '<p style="color: var(--text-muted); grid-column: span 3; text-align: center; padding: 20px;">No items found for this category. Check that the data file was loaded.</p>';
     }
 
     aplicarFiltro();
@@ -142,17 +148,23 @@ function criarElementoArrastavel(nome, containerDestino, ordem, cat) {
     return item;
 }
 
+/* PESQUISA E ADICIONAR ITEM */
+
+function normalizar(texto) {
+    return String(texto).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
 function aplicarFiltro() {
     const pool = document.getElementById('game-pool');
     const searchInput = document.getElementById('pool-search-input');
     if (!pool) return;
 
-    const termo = (searchInput ? searchInput.value : '').toLowerCase().trim();
+    const termo = normalizar(searchInput ? searchInput.value : '').trim();
     const soPesquisa = categoriaAtual === 'mix';
     let visiveis = 0;
 
     pool.querySelectorAll(':scope > .draggable-item').forEach(item => {
-        const coincide = item.dataset.nome.toLowerCase().includes(termo);
+        const coincide = normalizar(item.dataset.nome).startsWith(termo);
         const mostrar = soPesquisa ? (termo !== '' && coincide) : coincide;
         item.style.display = mostrar ? 'flex' : 'none';
         if (mostrar) visiveis++;
@@ -167,8 +179,8 @@ function aplicarFiltro() {
             pool.appendChild(dica);
         }
         dica.textContent = termo === ''
-            ? 'Type above to search through games, movies, series, and anime.'
-            : 'No results found. Press Add (or Enter) to create "' + searchInput.value.trim() + '".';
+            ? 'Type the first letters above to search games, movies, series and anime.'
+            : 'No results. Press Add (or Enter) to create "' + searchInput.value.trim() + '".';
     } else if (dica) {
         dica.remove();
     }
@@ -205,6 +217,8 @@ function adicionarItemManual() {
     guardarEstado();
 }
 
+/* DEVOLVER AO POOL E RESET */
+
 function devolverAoPool(item) {
     const pool = document.getElementById('game-pool');
     if (!pool || item.parentNode === pool) return;
@@ -220,10 +234,12 @@ function devolverAoPool(item) {
 
 function resetTierList() {
     if (!temItensNosTiers()) return;
-    if (!confirm('Devolver todos os itens ao pool?')) return;
+    if (!confirm('Return all items to the pool?')) return;
 
     document.querySelectorAll('.tier-items .draggable-item').forEach(devolverAoPool);
 }
+
+/* PERSISTÊNCIA */
 
 function lerEstado() {
     const pool = document.getElementById('game-pool');
@@ -259,7 +275,7 @@ function guardarEstado() {
     try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(lerEstado()));
     } catch (e) {
-        console.warn('Não foi possível guardar o progresso:', e);
+        console.warn('Could not save progress:', e);
     }
 }
 
@@ -325,6 +341,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+/* INTERAÇÃO */
+
 let ultimoTipo = 'mouse';
 let selecionado = null;
 
@@ -348,6 +366,8 @@ function encontrarReferencia(container, x, y, item) {
     }
     return null;
 }
+
+/* TOQUE */
 
 function limparSelecao() {
     if (selecionado) selecionado.classList.remove('selected');
@@ -420,6 +440,8 @@ document.addEventListener('click', (e) => {
     const container = encontrarContainer(e.target);
     if (container) colocarSelecionado(container);
 });
+
+/* RATO */
 
 function iniciarDrag() {
     const { item } = drag;

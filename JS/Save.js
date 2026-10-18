@@ -1,8 +1,5 @@
-/**
- * JCArchive - Save Tier List as Image
- * Captura o título personalizado inserido pelo utilizador e gera a imagem em alta resolução.
- * Tiers vazios são omitidos da imagem final.
- */
+/* UTILITÁRIOS */
+
 function escaparHTML(texto) {
     return texto
         .replace(/&/g, '&amp;')
@@ -11,17 +8,19 @@ function escaparHTML(texto) {
         .replace(/"/g, '&quot;');
 }
 
+/* GUARDAR COMO IMAGEM */
+
 function guardarTierList() {
     const originalContainer = document.getElementById("capture-tier-container");
     const inputTitle = document.getElementById("tier-custom-title");
 
     if (!originalContainer) {
-        console.error("Contentor de captura não encontrado.");
+        console.error("Capture container not found.");
         return;
     }
 
     if (typeof html2canvas === 'undefined') {
-        alert("A biblioteca html2canvas não foi carregada.");
+        alert("The html2canvas library was not loaded.");
         return;
     }
 
@@ -57,7 +56,7 @@ function guardarTierList() {
     });
 
     if (clonedContainer.querySelectorAll('.tier-row').length === 0) {
-        alert("A tier list está vazia. Arrasta pelo menos um item para um tier.");
+        alert("The tier list is empty. Drag at least one item into a tier.");
         return;
     }
 
@@ -83,7 +82,7 @@ function guardarTierList() {
         document.body.removeChild(link);
     }).catch(err => {
         if (wrapper.parentNode) document.body.removeChild(wrapper);
-        console.error("Erro ao gerar a imagem da Tier List:", err);
-        alert("Ocorreu um erro ao tentar guardar a imagem. Tenta novamente.");
+        console.error("Error generating the tier list image:", err);
+        alert("An error occurred while saving the image. Please try again.");
     });
 }
