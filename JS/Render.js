@@ -1,11 +1,20 @@
 /* RENDERIZAÇÃO DAS TIER LISTS E FILTROS */
 
+let postersLigados = false;
+try {
+    postersLigados = localStorage.getItem('jcarchive-posters') === 'on';
+} catch (e) {}
+
 function renderizarTabelaMedia(dados, containerId, selectFilterId, tipoFiltroChave) {
     const container = document.getElementById(containerId);
     if (!container) return;
 
+    let dadosAtuais = dados;
+
     function desenhar(dadosParaRenderizar) {
+        dadosAtuais = dadosParaRenderizar;
         container.innerHTML = '';
+        container.classList.toggle('posters-on', postersLigados);
 
         if (!dadosParaRenderizar || dadosParaRenderizar.length === 0) {
             container.innerHTML = '<p style="color: var(--text-muted); text-align: center; padding: 20px;">No items found.</p>';
@@ -67,6 +76,19 @@ function renderizarTabelaMedia(dados, containerId, selectFilterId, tipoFiltroCha
                     card.innerHTML = `<strong>${nome}</strong><span style="font-size: 0.75rem; opacity: 0.7; display: block;">${subTexto}</span>`;
                     card.title = `${nome}${subTexto ? ' - ' + subTexto : ''}`;
 
+                    if (item.img && postersLigados) {
+                        const img = document.createElement('img');
+                        img.src = item.img;
+                        img.alt = nome;
+                        img.loading = 'lazy';
+                        img.onerror = () => {
+                            img.remove();
+                            card.classList.remove('has-poster');
+                        };
+                        card.classList.add('has-poster');
+                        card.prepend(img);
+                    }
+
                     tierItems.appendChild(card);
                 });
             }
@@ -78,6 +100,18 @@ function renderizarTabelaMedia(dados, containerId, selectFilterId, tipoFiltroCha
     }
 
     desenhar(dados);
+
+    const togglePosters = document.getElementById('toggle-posters');
+    if (togglePosters) {
+        togglePosters.checked = postersLigados;
+        togglePosters.onchange = () => {
+            postersLigados = togglePosters.checked;
+            try {
+                localStorage.setItem('jcarchive-posters', postersLigados ? 'on' : 'off');
+            } catch (e) {}
+            desenhar(dadosAtuais);
+        };
+    }
 
     if (selectFilterId) {
         const selectElement = document.getElementById(selectFilterId);
