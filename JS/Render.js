@@ -77,8 +77,15 @@ function renderizarTabelaMedia(dados, containerId, selectFilterId, tipoFiltroCha
                     card.title = `${nome}${subTexto ? ' - ' + subTexto : ''}`;
 
                     if (item.img && postersLigados) {
-                        const img = document.createElement('img');
-                        img.src = item.img;
+                const img = document.createElement('img');
+                
+                let caminhoImg = item.img;
+                if (caminhoImg && !caminhoImg.startsWith('http')) {
+                    if (caminhoImg.startsWith('/')) caminhoImg = caminhoImg.substring(1);
+                            caminhoImg = `https://jchacker2024.github.io/JC_Archive/${caminhoImg}`;
+                        }
+
+                        img.src = caminhoImg;
                         img.alt = nome;
                         img.loading = 'lazy';
                         img.onerror = () => {
