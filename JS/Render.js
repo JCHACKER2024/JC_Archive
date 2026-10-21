@@ -1,6 +1,6 @@
 /* RENDERIZAÇÃO DAS TIER LISTS E FILTROS */
 
-const BASE_URL = ''; 
+const BASE_URL = '';
 const EXTENSOES_CAPA = ['jpg'];
 
 let postersLigados = false;
@@ -63,13 +63,7 @@ function renderizarTabelaMedia(dados, containerId, selectFilterId, tipoFiltroCha
 
     function desenhar(dadosParaRenderizar) {
         dadosAtuais = dadosParaRenderizar;
-        
-        // Usamos um DocumentFragment principal para o container para evitar repinturas excessivas do browser (Lag fix)
-        const fragmentContainer = document.createDocumentFragment();
-        
-        const tempContainer = document.createElement('div');
-        tempContainer.className = container.className;
-        tempContainer.classList.toggle('posters-on', postersLigados);
+        container.classList.toggle('posters-on', postersLigados);
 
         if (!dadosParaRenderizar || dadosParaRenderizar.length === 0) {
             container.innerHTML = '<p style="color: var(--text-muted); text-align: center; padding: 20px;">No items found.</p>';
@@ -86,12 +80,15 @@ function renderizarTabelaMedia(dados, containerId, selectFilterId, tipoFiltroCha
             { key: 'F',  label: 'F',  class: 'tier-f',     subtitle: 'DOG SHIT' }
         ];
 
+        const fragmento = document.createDocumentFragment();
+
         ordemTiers.forEach(tierInfo => {
             const itensDoTier = dadosParaRenderizar.filter(item => {
                 const itemTier = item.tier ? item.tier.toUpperCase() : 'B';
                 return itemTier === tierInfo.key;
             });
 
+            // Com capas ligadas e pasta definida, cada season vira o seu cartão
             const entradas = [];
             itensDoTier.forEach(item => {
                 const seasons = listaSeasons(item);
@@ -118,7 +115,6 @@ function renderizarTabelaMedia(dados, containerId, selectFilterId, tipoFiltroCha
             if (entradas.length === 0) {
                 tierItems.innerHTML = '<span style="color: var(--text-muted); font-size: 0.80rem; padding: 10px; opacity: 0.5;">-</span>';
             } else {
-                // Fragmento secundário para os items do tier
                 const fragmentItems = document.createDocumentFragment();
 
                 entradas.forEach(({ item, season }) => {
@@ -162,12 +158,11 @@ function renderizarTabelaMedia(dados, containerId, selectFilterId, tipoFiltroCha
 
             tierRow.appendChild(tierLabel);
             tierRow.appendChild(tierItems);
-            tempContainer.appendChild(tierRow);
+            fragmento.appendChild(tierRow);
         });
 
-        fragmentContainer.appendChild(tempContainer);
         container.innerHTML = '';
-        container.appendChild(fragmentContainer);
+        container.appendChild(fragmento);
     }
 
     desenhar(dados);
