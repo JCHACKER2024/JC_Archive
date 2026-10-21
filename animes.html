@@ -24,6 +24,12 @@
     <main class="container">
         <div class="archive-header">
             <h1>Anime Tier List</h1>
+            <div class="filters">
+                <label class="poster-toggle">
+                    <input type="checkbox" id="toggle-posters">
+                    <span>Show posters</span>
+                </label>
+            </div>
         </div>
 
         <div id="animes-tier-container" class="tier-container"></div>
@@ -34,7 +40,7 @@
     <script src="JS/Render.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            renderizarTabelaMedia(dadosAnimes, 'animes-tier-container', null, null);
+            renderizarTabelaMedia(dadosAnimes, 'animes-tier-container', null, null, 'Animes');
         });
     </script>
 </body>
