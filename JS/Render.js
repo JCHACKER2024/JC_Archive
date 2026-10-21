@@ -1,6 +1,11 @@
 /* RENDERIZAÇÃO DAS TIER LISTS E FILTROS */
 
-const BASE_URL = '';
+const BASE_GITHUB = 'https://jchacker2024.github.io/JC_Archive/';
+const HOSTS_COM_IMAGENS = ['localhost', '127.0.0.1', ''];
+const TEM_IMAGENS_LOCAIS =
+    location.hostname.endsWith('github.io') || HOSTS_COM_IMAGENS.includes(location.hostname);
+const BASE_URL = TEM_IMAGENS_LOCAIS ? '' : BASE_GITHUB;
+
 const EXTENSOES_CAPA = ['jpg'];
 
 let postersLigados = false;
