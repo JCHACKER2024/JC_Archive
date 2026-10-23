@@ -1,0 +1,9 @@
+@"
+node_modules/
+TOOLS/chaves.js
+TOOLS/relatorio_*.txt
+TOOLS/package.json
+TOOLS/package-lock.json
+dist_itch/
+JCArchive_itch.zip
+"@ | Set-Content -Encoding ascii .gitignore

@@ -48,7 +48,7 @@ const dadosAnimes = [
     { tier: "S", titulo: "By the Grace of the Gods", season: "1, 2", ano: "Mixed" },
     { tier: "S", titulo: "Classroom of the Elite", season: "1, 2, 3", ano: "Mixed" },
     { tier: "S", titulo: "Demon Slayer", season: "1, 2, 3, 4", ano: "Mixed" },
-    { tier: "S", titulo: "Fairy Tail", season: "1", ano: "Mixed" },
+    { tier: "S", titulo: "Fairy Tail", season: "1", ano: "2009" },
     { tier: "S", titulo: "Fire Force", season: "1, 2", ano: "Mixed" },
     { tier: "S", titulo: "Kaiju No. 8", season: "1, 2", ano: "Mixed" },
     { tier: "S", titulo: "Kuroko's Basketball", season: "1, 2, 3", ano: "Mixed" },
