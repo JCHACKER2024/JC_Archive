@@ -1,12 +1,12 @@
 const dadosSeries = [
     // --- TIER S+ ---
     {tier: "S+", titulo: "The Walking Dead", season: "1", ano: 2010, genero: "Action"},
-    {tier: "S+", titulo: "The Witcher", season: "1", ano: 2019, genero: "Adventure"},
     {tier: "S+", titulo: "Primal", season: "1", ano: 2019, genero: "Animation"},
+    {tier: "S+", titulo: "The Witcher", season: "1", ano: 2019, genero: "Adventure"},
     {tier: "S+", titulo: "The Queen's Gambit", season: "1", ano: 2020, genero: "Drama"},
-    {tier: "S+", titulo: "Wednesday", season: "1", ano: 2022, genero: "Mystery"},
     {tier: "S+", titulo: "All of Us Are Dead", season: "1", ano: 2022, genero: "Japanese"},
     {tier: "S+", titulo: "Weak Hero", season: "1", ano: 2022, genero: "Japanese"},
+    {tier: "S+", titulo: "Wednesday", season: "1", ano: 2022, genero: "Mystery"},
     {tier: "S+", titulo: "Fallout", season: "2", ano: 2025, genero: "Action"},
     {tier: "S+", titulo: "Teach You a Lesson", season: "1", ano: 2026, genero: "Japanese"},
     {tier: "S+", titulo: "Alice in Borderland", season: "1, 2", ano: "Mixed", genero: "Japanese"},
@@ -24,6 +24,7 @@ const dadosSeries = [
     {tier: "S+", titulo: "Stranger Things", season: "1, 2, 4, 5", ano: "Mixed", genero: "Action"},
     {tier: "S+", titulo: "The Amazing World of Gumball", season: "1, 2, 3, 4, 5, 6", ano: "Mixed", genero: "Animation"},
     {tier: "S+", titulo: "The Punisher", season: "1, 2", ano: "Mixed", genero: "Action"},
+
     // --- TIER S ---
     {tier: "S", titulo: "The Walking Dead", season: "2", ano: 2011, genero: "Action"},
     {tier: "S", titulo: "Vikings", season: "1", ano: 2013, genero: "Adventure"},
@@ -40,17 +41,19 @@ const dadosSeries = [
     {tier: "S", titulo: "Sex Education", season: "3, 4", ano: "Mixed", genero: "Comedy"},
     {tier: "S", titulo: "The Mandalorian", season: "1, 2", ano: "Mixed", genero: "Adventure"},
     {tier: "S", titulo: "The Witcher", season: "2, 3", ano: "Mixed", genero: "Adventure"},
+
     // --- TIER A ---
     {tier: "A", titulo: "Vikings", season: "2", ano: 2014, genero: "Adventure"},
-    {tier: "A", titulo: "Locke & Key", season: "3", ano: 2022, genero: "Mystery"},
     {tier: "A", titulo: "From", season: "1", ano: 2022, genero: "Mystery"},
+    {tier: "A", titulo: "Locke & Key", season: "3", ano: 2022, genero: "Mystery"},
     {tier: "A", titulo: "The Mandalorian", season: "3", ano: 2023, genero: "Adventure"},
     {tier: "A", titulo: "Knuckles", season: "1", ano: 2024, genero: "Action"},
     {tier: "A", titulo: "The Last of Us", season: "2", ano: 2025, genero: "Action"},
     {tier: "A", titulo: "The Witcher", season: "4", ano: 2025, genero: "Adventure"},
     {tier: "A", titulo: "Rick and Morty", season: "1, 2, 3, 4, 5, 6, 7", ano: "Mixed", genero: "Animation"},
     {tier: "A", titulo: "The Good Doctor", season: "1, 2, 3, 4, 5, 6", ano: "Mixed", genero: "Drama"},
+
     // --- TIER B ---
     {tier: "B", titulo: "The Walking Dead", season: "3", ano: 2012, genero: "Action"},
-    {tier: "B", titulo: "Game of Thrones", season: "8", ano: 2019, genero: "Adventure"},
+    {tier: "B", titulo: "Game of Thrones", season: "8", ano: 2019, genero: "Adventure"}
 ];

@@ -1,5 +1,6 @@
 @"
 node_modules/
+TOOLS/backups/
 TOOLS/chaves.js
 TOOLS/relatorio_*.txt
 TOOLS/package.json

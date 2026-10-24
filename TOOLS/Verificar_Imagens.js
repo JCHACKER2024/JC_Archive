@@ -1,22 +1,51 @@
 /**
- * Verificar_Imagens.js - verifica as imagens de JOGOS e FILMES (campo img dos dados)
+ * Verificar_Imagens.js - verifica as imagens de JOGOS, FILMES, SÉRIES e ANIMES
  * Uso (na raiz do projeto): node TOOLS/Verificar_Imagens.js
- * Só lê. Para séries e animes usa o Capas_Faltam.js
+ * Para guardar a lista num ficheiro: node TOOLS/Verificar_Imagens.js > lista.txt
+ * Só lê. Não altera nem apaga nada. Só aceita .jpg, com maiúsculas e minúsculas exatas.
+ *
+ * Jogos e filmes: usa o campo img dos dados.
+ * Séries e animes: o nome da capa é título + season (ex.: attack-on-titan-s3.jpg).
  */
 
-const { CATEGORIAS, lerDados, nomeItem, slugMedia, existeExato, listarFicheiros } = require('./comum');
+const path = require('path');
+const {
+    CATEGORIAS, slug, slugMedia, nomeItem, listaSeasons,
+    lerDados, existeExato, listarFicheiros
+} = require('./comum');
 
-let total = 0;
+const EXT_CERTA = 'jpg';
+let total = 0; // pontos a rever
+let info = 0;  // só informação (ficheiros sem dono)
 
-function secao(titulo, linhas) {
+function secao(titulo, linhas, conta = true) {
     if (linhas.length === 0) return;
     console.log(`\n--- ${titulo} (${linhas.length}) ---`);
     linhas.forEach((l) => console.log(l));
-    total += linhas.length;
+    if (conta) total += linhas.length;
+    else info += linhas.length;
 }
 
-['jogos', 'filmes'].forEach((chave) => {
-    const cfg = CATEGORIAS[chave];
+function distancia(a, b) {
+    const m = a.length;
+    const n = b.length;
+    const d = Array.from({ length: m + 1 }, (_, i) => [i, ...Array(n).fill(0)]);
+    for (let j = 1; j <= n; j++) d[0][j] = j;
+    for (let i = 1; i <= m; i++) {
+        for (let j = 1; j <= n; j++) {
+            d[i][j] = Math.min(
+                d[i - 1][j] + 1,
+                d[i][j - 1] + 1,
+                d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)
+            );
+        }
+    }
+    return d[m][n];
+}
+
+/* JOGOS E FILMES: campo img */
+
+function verificarComImg(cfg) {
     const { dados } = lerDados(cfg);
 
     const semImg = [];
@@ -65,8 +94,77 @@ function secao(titulo, linhas) {
     secao('SEM CAMPO img NOS DADOS', semImg);
     secao('img QUE NÃO TERMINA EM .jpg', naoJpg);
     secao('MESMA IMAGEM USADA EM VÁRIOS ITENS', duplicadas);
-    secao('FICHEIROS NA PASTA QUE NENHUM ITEM USA', orfaos);
     secao('FICHEIROS NA PASTA QUE NÃO SÃO .jpg', naoJpgNaPasta);
-});
+    secao('FICHEIROS SEM DONO (nenhum item os usa; só informação)', orfaos, false);
+}
+
+/* SÉRIES E ANIMES: título + season */
+
+function verificarPorSeason(cfg) {
+    const { dados } = lerDados(cfg);
+
+    const esperados = new Map();
+    dados.forEach((item) => {
+        listaSeasons(item).forEach((s) => {
+            const stem = `${slug(item.titulo)}-s${s}`;
+            if (!esperados.has(stem)) esperados.set(stem, { titulo: item.titulo, season: s });
+        });
+    });
+
+    const ficheiros = listarFicheiros(cfg.pasta).map((n) => ({
+        nome: n,
+        stem: path.parse(n).name,
+        ext: path.parse(n).ext.slice(1)
+    }));
+
+    const emFalta = [];
+    const extErrada = [];
+
+    for (const [stem, i] of esperados) {
+        if (ficheiros.some((f) => f.stem === stem && f.ext === EXT_CERTA)) continue;
+        const outro = ficheiros.find((f) => f.stem === stem);
+        if (outro) extErrada.push({ stem, nome: outro.nome });
+        else emFalta.push({ stem, titulo: i.titulo, season: i.season });
+    }
+
+    const candidatos = [...emFalta.map((x) => x.stem), ...extErrada.map((x) => x.stem)];
+    const semDono = ficheiros.filter((f) => !esperados.has(f.stem)).map((f) => {
+        let melhor = null;
+        let melhorDist = Infinity;
+        candidatos.forEach((c) => {
+            const dist = distancia(f.stem.toLowerCase(), c);
+            if (dist < melhorDist) {
+                melhorDist = dist;
+                melhor = c;
+            }
+        });
+        const limite = Math.max(3, Math.floor(f.stem.length * 0.3));
+        return melhorDist <= limite
+            ? `${f.nome}  ->  talvez seja ${melhor}.${EXT_CERTA}`
+            : `${f.nome}  ->  nenhuma sugestão (season futura?)`;
+    });
+
+    console.log(`\n==================== ${cfg.nome} (${cfg.pasta}) ====================`);
+    console.log(`Seasons nos dados: ${esperados.size} | Ficheiros na pasta: ${ficheiros.length}`);
+
+    secao(
+        'EM FALTA - cria estes ficheiros',
+        emFalta.map(({ stem, titulo, season }) => `${stem}.${EXT_CERTA}    <- ${titulo}, season ${season}`)
+    );
+    secao(
+        `EXTENSÃO ERRADA - só se aceita .${EXT_CERTA} (minúsculas)`,
+        extErrada.map(({ stem, nome }) => `${nome}  ->  ${stem}.${EXT_CERTA}`)
+    );
+    secao('FICHEIROS SEM DONO (nome errado ou season que ainda não está nos dados; só informação)', semDono, false);
+}
+
+/* MAIN */
+
+verificarComImg(CATEGORIAS.jogos);
+verificarComImg(CATEGORIAS.filmes);
+verificarPorSeason(CATEGORIAS.series);
+verificarPorSeason(CATEGORIAS.animes);
 
 console.log(total === 0 ? '\nTudo certo.' : `\nTotal: ${total} pontos a rever.`);
+if (info > 0) console.log(`(${info} ficheiros sem dono: só informação, podem ser itens ou seasons futuras.)`);
+process.exitCode = total > 0 ? 1 : 0;
