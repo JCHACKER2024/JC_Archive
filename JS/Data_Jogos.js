@@ -217,7 +217,7 @@ const dadosJogos = [
     {tier: "A", jogo: "Archero 2", ano: 2025, plataforma: "Mobile", img: "IMG/Jogos/archero-2-2025.jpg"},
     {tier: "A", jogo: "Clair Obscur: Expedition 33", ano: 2025, plataforma: "Playstation", img: "IMG/Jogos/clair-obscur-expedition-33-2025.jpg"},
     {tier: "A", jogo: "Dying Light: The Beast", ano: 2025, plataforma: "Computer", img: "IMG/Jogos/dying-light-the-beast-2025.jpg"},
-    {tier: "A", jogo: "Ferocious", ano: 2025, plataforma: "Computer", img: "IMG/Jogos/ferocious-2025.jpg"},
+    {tier: "A", jogo: "FEROCIOUS", ano: 2025, plataforma: "Computer", img: "IMG/Jogos/ferocious-2025.jpg"},
     {tier: "A", jogo: "South of Midnight", ano: 2025, plataforma: "Playstation", img: "IMG/Jogos/south-of-midnight-2025.jpg"},
     {tier: "A", jogo: "The Bazaar", ano: 2025, plataforma: "Computer", img: "IMG/Jogos/the-bazaar-2025.jpg"},
     {tier: "A", jogo: "Arrows: Puzzle Escape", ano: 2025, plataforma: "Mobile", img: "IMG/Jogos/arrows-puzzle-escape-2025.jpg"},

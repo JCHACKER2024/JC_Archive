@@ -41,6 +41,7 @@ const dadosSeries = [
     {tier: "S", titulo: "Sex Education", season: "3, 4", ano: "Mixed", genero: "Comedy"},
     {tier: "S", titulo: "The Mandalorian", season: "1, 2", ano: "Mixed", genero: "Adventure"},
     {tier: "S", titulo: "The Witcher", season: "2, 3", ano: "Mixed", genero: "Adventure"},
+    {tier: "S", titulo: "Winx Club", season: "1, 2, 3", ano: "Mixed", genero: "Animation"},
 
     // --- TIER A ---
     {tier: "A", titulo: "Vikings", season: "2", ano: 2014, genero: "Adventure"},
