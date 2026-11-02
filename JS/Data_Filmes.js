@@ -321,7 +321,7 @@ const dadosFilmes = [
     {tier: "B", titulo: "Cloverfield", ano: 2008, genero: "Action / Science Fiction / Horror", img: "IMG/Filmes/cloverfield-2008.jpg"},
     {tier: "B", titulo: "The Mummy: Tomb of the Dragon Emperor", ano: 2008, genero: "Action / Adventure", img: "IMG/Filmes/the-mummy-tomb-of-the-dragon-emperor-2008.jpg"},
     {tier: "B", titulo: "Monsters vs. Aliens", ano: 2009, genero: "Animation", img: "IMG/Filmes/monsters-vs-aliens-2009.jpg"},
-    {tier: "B", titulo: "Percy Jackson & the Olympians: The Lightning Thief", ano: 2010, genero: "Adventure", img: "IMG/Filmes/percy-jackson-and-the-olympians-the-lightning-thie-2010.jpg"},
+    {tier: "B", titulo: "Percy Jackson & the Olympians: The Lightning Thief", ano: 2010, genero: "Adventure", img: "IMG/Filmes/percy-jackson-and-the-olympians-the-lightning-thief-2010.jpg"},
     {tier: "B", titulo: "Battleship", ano: 2012, genero: "Action / Science Fiction", img: "IMG/Filmes/battleship-2012.jpg"},
     {tier: "B", titulo: "Annabelle", ano: 2014, genero: "Horror", img: "IMG/Filmes/annabelle-2014.jpg"},
     {tier: "B", titulo: "Allegiant", ano: 2016, genero: "Action / Adventure / Science Fiction", img: "IMG/Filmes/allegiant-2016.jpg"},

@@ -101,6 +101,7 @@ const dadosAnimes = [
     {tier: "C", titulo: "Akudama Drive", season: "1", ano: 2020},
     {tier: "C", titulo: "The Strongest Sage with the Weakest Crest", season: "1", ano: 2022},
     {tier: "C", titulo: "Hell's Paradise", season: "2", ano: 2026},
+    {tier: "C", titulo: "Nia Liston: The Merciless Maiden", season: "1", ano: 2026},
 
     // --- TIER D ---
     {tier: "D", titulo: "JoJo's Bizarre Adventure", season: "1", ano: 2012},
