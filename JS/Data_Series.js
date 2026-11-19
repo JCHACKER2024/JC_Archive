@@ -51,7 +51,7 @@ const dadosSeries = [
     {tier: "A", titulo: "Knuckles", season: "1", ano: 2024, genero: "Action"},
     {tier: "A", titulo: "The Last of Us", season: "2", ano: 2025, genero: "Action"},
     {tier: "A", titulo: "The Witcher", season: "4", ano: 2025, genero: "Adventure"},
-    {tier: "A", titulo: "Rick and Morty", season: "1, 2, 3, 4, 5, 6, 7", ano: "Mixed", genero: "Animation"},
+    {tier: "A", titulo: "Rick and Morty", season: "1, 2, 3, 4, 5, 6, 7, 8, 9", ano: "Mixed", genero: "Animation"},
     {tier: "A", titulo: "The Good Doctor", season: "1, 2, 3, 4, 5, 6", ano: "Mixed", genero: "Drama"},
 
     // --- TIER B ---

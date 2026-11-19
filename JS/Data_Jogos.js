@@ -89,6 +89,7 @@ const dadosJogos = [
     {tier: "S", jogo: "Dont Touch The Spikes", ano: 2013, plataforma: "Mobile", img: "IMG/Jogos/dont-touch-the-spikes-2013.jpg"},
     {tier: "S", jogo: "Far Cry 3: Blood Dragon", ano: 2013, plataforma: "Computer", img: "IMG/Jogos/far-cry-3-blood-dragon-2013.jpg"},
     {tier: "S", jogo: "Where's My Water 2", ano: 2013, plataforma: "Mobile", img: "IMG/Jogos/where-s-my-water-2-2013.jpg"},
+    {tier: "S", jogo: "Giant Boulder of Death", ano: 2013, plataforma: "Mobile", img: "IMG/Jogos/giant-boulder-of-death-2013.jpg"},
     {tier: "S", jogo: "Earn to Die 2", ano: 2014, plataforma: "Computer", img: "IMG/Jogos/earn-to-die-2-2014.jpg"},
     {tier: "S", jogo: "Five Nights at Freddy's", ano: 2014, plataforma: "Computer", img: "IMG/Jogos/five-nights-at-freddy-s-2014.jpg"},
     {tier: "S", jogo: "Metro 2033 Redux", ano: 2014, plataforma: "Computer", img: "IMG/Jogos/metro-2033-redux-2014.jpg"},
@@ -225,6 +226,7 @@ const dadosJogos = [
     {tier: "A", jogo: "Moonlighter 2: The Endless Vault", ano: 2026, plataforma: "Computer", img: "IMG/Jogos/moonlighter-2-the-endless-vault-2026.jpg"},
     {tier: "A", jogo: "High On Life 2", ano: 2026, plataforma: "Computer", img: "IMG/Jogos/high-on-life-2-2026.jpg"},
     {tier: "A", jogo: "Gears of War: E-Day", ano: 2026, plataforma: "Computer", img: "IMG/Jogos/gears-of-war-e-day-2026.jpg"},
+    {tier: "A", jogo: "Resonance: A Plague Tale Legacy", ano: 2026, plataforma: "Computer", img: "IMG/Jogos/resonance-a-plague-tale-legacy-2026.jpg"},
 
     // --- TIER B ---
     {tier: "B", jogo: "Battlefield Vietnam", ano: 2004, plataforma: "Computer", img: "IMG/Jogos/battlefield-vietnam-2004.jpg"},
@@ -273,6 +275,7 @@ const dadosJogos = [
     {tier: "B", jogo: "Above Snakes", ano: 2023, plataforma: "Computer", img: "IMG/Jogos/above-snakes-2023.jpg"},
     {tier: "B", jogo: "Pizza Possum", ano: 2023, plataforma: "Computer", img: "IMG/Jogos/pizza-possum-2023.jpg"},
     {tier: "B", jogo: "Terra Nil", ano: 2023, plataforma: "Computer", img: "IMG/Jogos/terra-nil-2023.jpg"},
+    {tier: "B", jogo: "Call of Duty: Modern Warfare III", ano: 2023, plataforma: "Computer", img: "IMG/Jogos/call-of-duty-modern-warfare-iii-2023.jpg"},
     {tier: "B", jogo: "Backrooms Society", ano: 2024, plataforma: "Computer", img: "IMG/Jogos/backrooms-society-2024.jpg"},
     {tier: "B", jogo: "Capybara Go!", ano: 2024, plataforma: "Mobile", img: "IMG/Jogos/capybara-go-2024.jpg"},
     {tier: "B", jogo: "Sketchy's Contract", ano: 2024, plataforma: "Computer", img: "IMG/Jogos/sketchy-s-contract-2024.jpg"},
@@ -330,6 +333,7 @@ const dadosJogos = [
     {tier: "D", jogo: "Deducto", ano: 2023, plataforma: "Computer", img: "IMG/Jogos/deducto-2023.jpg"},
     {tier: "D", jogo: "Flat Fat Fartfest", ano: 2024, plataforma: "Computer", img: "IMG/Jogos/flat-fat-fartfest-2024.jpg"},
     {tier: "D", jogo: "Tales of Kenzera: ZAU", ano: 2024, plataforma: "Playstation", img: "IMG/Jogos/tales-of-kenzera-zau-2024.jpg"},
+    {tier: "D", jogo: "Call of Duty: Modern Warfare 4", ano: 2026, plataforma: "Computer", img: "IMG/Jogos/call-of-duty-modern-warfare-4-2026.jpg"},
 
     // --- TIER F ---
     {tier: "F", jogo: "Far Cry 2", ano: 2008, plataforma: "Computer", img: "IMG/Jogos/far-cry-2-2008.jpg"},
@@ -345,6 +349,7 @@ const dadosJogos = [
     {tier: "F", jogo: "Uncharted 4: A Thief's End", ano: 2016, plataforma: "Playstation", img: "IMG/Jogos/uncharted-4-a-thief-s-end-2016.jpg"},
     {tier: "F", jogo: "Unravel", ano: 2016, plataforma: "Playstation", img: "IMG/Jogos/unravel-2016.jpg"},
     {tier: "F", jogo: "Greedy Guns", ano: 2017, plataforma: "Computer", img: "IMG/Jogos/greedy-guns-2017.jpg"},
+    {tier: "F", jogo: "Prey", ano: 2017, plataforma: "Computer", img: "IMG/Jogos/prey-2017.jpg"},
     {tier: "F", jogo: "Bouncemasters", ano: 2018, plataforma: "Mobile", img: "IMG/Jogos/bouncemasters-2018.jpg"},
     {tier: "F", jogo: "Apex Legends", ano: 2019, plataforma: "Computer", img: "IMG/Jogos/apex-legends-2019.jpg"},
     {tier: "F", jogo: "Blazing Beaks", ano: 2019, plataforma: "Computer", img: "IMG/Jogos/blazing-beaks-2019.jpg"},
